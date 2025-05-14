@@ -2,8 +2,8 @@ const fs = require("fs");
 const https = require("https");
 
 const urls = [
-  { name: "#us", url: "https://webhostmost-us.doon.eu.org/sub" },
-  { name: "#in", url: "https://webhostmost-in.doon.eu.org/sub" }
+  { name: "#us", url: "https://sub.doon.eu.org/webhostmost-us" },
+  { name: "#in", url: "https://sub.doon.eu.org/webhostmost-in" }
 ];
 
 function checkURL({ name, url }) {
