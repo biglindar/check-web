@@ -25,7 +25,8 @@ function checkURL({ name, url }) {
       resolve(`[${date}] ${name} - ${res.statusCode} - ${duration}ms`);
     }).on("error", (err) => {
       const date = new Date(Date.now() + 8 * 3600 * 1000).toISOString().replace("T", " ").replace(/\.\d+Z$/, "");
-      resolve(`[${date}] ${name} - ERROR - ${err.message}`);
+      // 输出详细错误信息
+      resolve(`[${date}] ${name} - ERROR - ${err.message} - ${err.stack}`);
     });
   });
 }
