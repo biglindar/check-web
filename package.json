@@ -1,7 +1,12 @@
 {
   "name": "url-monitor",
   "version": "1.0.0",
+  "description": "定时访问网页并记录结果",
+  "main": "check.js",
   "scripts": {
     "check": "node check.js"
-  }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT"
 }
