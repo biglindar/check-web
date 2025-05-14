@@ -4,7 +4,7 @@ const https = require("https");
 // 需要监控的网址
 const urls = [
   "https://webhostmost-us.doon.eu.org/sub", // 替换为你自己的网址
-  "https://webhostmost-in.doon.eu.org/sub" // 替换为你自己的网址
+  "https://sub.doon.eu.org/abc" // 替换为你自己的网址
 ];
 
 // 随机延迟函数
