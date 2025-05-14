@@ -1,33 +1,37 @@
 const fs = require("fs");
 const https = require("https");
 
-// URL 列表，替换为你自己的网址
+// 需要监控的网址
 const urls = [
-  "https://webhostmost-us.doon.eu.org/sub",
-  "https://webhostmost-in.doon.eu.org/sub"
+  "https://webhostmost-us.doon.eu.org/sub",   // 替换为你自己的网址
+  "https://webhostmost-in.doon.eu.org/sub"    // 替换为你自己的网址
 ];
 
-// 模拟正常浏览器的请求头
-const options = {
-  headers: {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-    'Accept-Language': 'en-US,en;q=0.5',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'Connection': 'keep-alive',
-    'Upgrade-Insecure-Requests': '1'
-  }
-};
-
-// 随机延迟函数（模拟正常用户行为）
+// 随机延迟函数（模拟更自然的请求）
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// 检查 URL 并返回结果
+// 请求函数，带上伪装的浏览器请求头
 function checkURL(url) {
   return new Promise((resolve) => {
     const start = Date.now();
+    
+    // 根据 URL 设置 Referer 和 Origin
+    const options = {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+        'X-Requested-With': 'XMLHttpRequest',   // 有些站点可能需要此头部
+        'Referer': url,                         // 设置 Referer 为目标 URL
+        'Origin': url                           // 设置 Origin 为目标 URL
+      }
+    };
+
     https.get(url, options, (res) => {
       const duration = Date.now() - start;
       resolve(`[${new Date().toISOString()}] ${url} - ${res.statusCode} - ${duration}ms`);
@@ -37,15 +41,20 @@ function checkURL(url) {
   });
 }
 
-// 主程序：按顺序检查 URL 并记录日志
+// 主执行函数
 (async () => {
-  const results = await Promise.all(urls.map(async (url) => {
-    await sleep(Math.random() * 2000); // 随机延迟 0~2秒
-    return checkURL(url);
-  }));
+  // 等待所有网址的请求完成
+  const results = await Promise.all(urls.map(checkURL));
 
+  // 格式化日志
   const logEntry = results.join("\n") + "\n";
 
-  console.log(logEntry); // 输出到控制台
-  fs.appendFileSync("log.md", logEntry); // 写入日志文件
+  // 输出到控制台（GitHub Actions 中的日志）
+  console.log(logEntry);
+
+  // 将日志写入本地文件 log.md
+  fs.appendFileSync("log.md", logEntry);
+
+  // 每次执行后等待 5 秒，模拟更自然的请求间隔
+  await sleep(5000);
 })();
