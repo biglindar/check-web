@@ -3,7 +3,7 @@ const https = require("https");
 
 // 需要监控的网址
 const urls = [
-  "https://sub.doon.eu.org/1", // 替换为你自己的网址
+  "https://webhostmost-us.doon.eu.org/sub", // 替换为你自己的网址
   "https://webhostmost-in.doon.eu.org/sub" // 替换为你自己的网址
 ];
 
