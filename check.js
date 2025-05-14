@@ -33,10 +33,8 @@ function checkURL(url, timeout = 10000) { // 默认超时10秒
         'Accept-Encoding': 'gzip, deflate, br',
         'Connection': 'keep-alive',
         'Upgrade-Insecure-Requests': '1',
-        // 移除 Referer, Origin, X-Requested-With 等头部，让它看起来像直接访问，
-        // 或者你可以根据实际情况设置一个合理的 Referer (比如网站主页)
-        // 'Referer': 'https://webhostmost-us.doon.eu.org/', // 示例：设置为可能的来源页
-        // 'Origin': 'https://webhostmost-us.doon.eu.org/' // 示例
+        'Referer': 'https://webhostmost-us.doon.eu.org/', // 示例：设置为可能的来源页
+        'Origin': 'https://webhostmost-us.doon.eu.org/' // 示例
       },
       timeout: timeout // Node.js v13.1.0+ 支持 options.timeout
     };
