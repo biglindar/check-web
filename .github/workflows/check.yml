@@ -1,0 +1,33 @@
+name: URL Monitor
+
+on:
+  schedule:
+    - cron: '0 */2 * * *'  # 每2小时执行一次
+  workflow_dispatch:        # 可手动运行
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 获取代码
+        uses: actions/checkout@v3
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 安装依赖
+        run: npm install
+
+      - name: 执行访问脚本
+        run: npm run check
+
+      - name: 提交日志更新
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add log.md
+          git commit -m "日志更新 $(date -u '+%Y-%m-%d %H:%M:%S')" || echo "无变化"
+          git push
