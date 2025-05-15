@@ -3,7 +3,7 @@ name: URL Monitor
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 */6 * * *' # 每两个小时 UTC 时间运行一次
+    - cron: '0 */3 * * *' # 每两个小时 UTC 时间运行一次
 
 jobs:
   monitor:
