@@ -2,8 +2,8 @@ const fs = require("fs");
 const https = require("https");
 
 const urls = [
-  { name: "#us", url: "https://sub.doon.eu.org/webhostmost-us" },
-  { name: "#in", url: "https://sub.doon.eu.org/webhostmost-in" }
+  { name: "#us", url: "网站1" },
+  { name: "#in", url: "网站2" }
 ];
 
 function formatBeijingTime(date) {
